@@ -139,9 +139,12 @@ Ao criar qualquer documentação nova, use os templates em `docs/templates/`:
 ## Agentes do sistema
 
 * **packages/agents/pm/**, Agente especializado em crédito imobiliário responsável por realizar o discovery de necessidades de negócio com base em sua base de conhecimento sobre regulações e informações atuais do produto (KB, knowledge base) e com base em artefatos adicionais como transcições de reuniões e documentos adicionais (KS, Knowledge Sources), além das interações com outros agentes. O use objetivo é gerar PRD (Product Requirement Documents), One-Pager, Backlog bem definido de épicos, features e histórias para consumo dos outros agentes;
-* **packages/agents/tech_lead/**, Engenheiro senior, que atua como tech lead de engenheiros de backend e frontend. Ele é responsável, com base no backlog, realizar refinamentos técnico de componentes existentes ou criar novos componentes para solução. O seu refinamento técnico é realizado com apoio de engenheiros especialistas em frontend e backend. Também é reponsável por criar e manter desenhos de solução além de gerar o Software Design Document;
-* **packages/agents/backend/**, Engenheiro senior especialista em desenvolvimento backend. Tem conhecimento profundo em Kotlin, Spring boot, Banco de dados relacionais e NoSQL e infraestrutura tanto AWS quanto Kubernetes;
-* **packages/agents/frontend/**, Engenheiro senior especialista em desenvolvimento frontend. Tem conhecimento profundo em TypeScript, ReactJS/NextJS e infraestrutura tanto AWS quanto Kubernetes.
+* **packages/agents/tech_lead/**, Engenheiro senior, que atua como tech lead de engenheiros de backend e frontend. Ele é responsável, com base no backlog, realizar refinamentos técnico de componentes existentes ou criar novos componentes para solução. O seu refinamento técnico é realizado com apoio de engenheiros especialistas em frontend e backend. Também é reponsável por criar e manter desenhos de solução além de gerar o Software Design Document. O conhecimento técnico deste agente refere-se aos produtos analisados durante
+o discovery, não à stack do sandbox (que é Python);
+* **packages/agents/backend/**, Engenheiro senior especialista em desenvolvimento backend. Tem conhecimento profundo em Kotlin, Spring boot, Banco de dados relacionais e NoSQL e infraestrutura tanto AWS quanto Kubernetes. O conhecimento técnico deste agente refere-se aos produtos analisados durante
+o discovery, não à stack do sandbox (que é Python).;
+* **packages/agents/frontend/**, Engenheiro senior especialista em desenvolvimento frontend. Tem conhecimento profundo em TypeScript, ReactJS/NextJS e infraestrutura tanto AWS quanto Kubernetes. O conhecimento técnico deste agente refere-se aos produtos analisados durante
+o discovery, não à stack do sandbox (que é Python)..
 
 ## O que nunca fazer
 * Criar arquivos fora da estrutura estabelecida do projeto;
