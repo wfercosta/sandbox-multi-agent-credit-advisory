@@ -120,19 +120,31 @@ Os tipos (types) suportados são:
 
 **Convenções para geração documentos**
 
-* Specs: toda feature começa com a crição de uma especificação no diretŕoio ```specs``, com o seguinte padrão: specs/NNNN-slug/spec.md
+* Specs: toda feature começa com a crição de uma especificação no diretŕoio ```specs``, com o seguinte padrão: specs/NNNN-slug/spec.md;
 * Diagram: todoa evolução do projeto deve ser a criação ou atualização da visão de arquitetura e design usando um modelo mermaid first e deve ser armazenado no diretório: docs/diagrams/;
 * ADRs: toda decisção importante do projeto deve ser gerado uma ADR no diretório docs/adr/ no formato MADR;
-* Playbooks: Toda definição de procedimentos, melhores práticas e estratégias padronizadas para execução de tarefas técnias devem ser colocados em: docs/playbooks, usando um formato markdown
-* Runbooks: Toda definição de procedimentos operacionais devem ser colocados em: docs/runbooks, usando um formato markdown
-* Templates: Toda definição templates padronizados devem ser colocados em: docs/templates, usando um formato markdown
+* Playbooks: Toda definição de procedimentos, melhores práticas e estratégias padronizadas para execução de tarefas técnias devem ser colocados em: docs/playbooks, usando um formato markdown;
+* Runbooks: Toda definição de procedimentos operacionais devem ser colocados em: docs/runbooks, usando um formato markdown;
+* Templates: Toda definição templates padronizados devem ser colocados em: docs/templates, usando um formato markdown;
+
+## Templates de documentação
+
+Ao criar qualquer documentação nova, use os templates em `docs/templates/`:
+
+- `spec.md` — especificação de feature (SDD)
+- `adr.md` — Architecture Decision Record (MADR estendido)
+- `runbook.md` — procedimento operacional
+- `readme-package.md` — README de pacote do monorepo
 
 ## Agentes do sistema
 
 * **packages/agents/pm/**, Agente especializado em crédito imobiliário responsável por realizar o discovery de necessidades de negócio com base em sua base de conhecimento sobre regulações e informações atuais do produto (KB, knowledge base) e com base em artefatos adicionais como transcições de reuniões e documentos adicionais (KS, Knowledge Sources), além das interações com outros agentes. O use objetivo é gerar PRD (Product Requirement Documents), One-Pager, Backlog bem definido de épicos, features e histórias para consumo dos outros agentes;
-* **packages/agents/tech_lead/**, Engenheiro senior, que atua como tech lead de engenheiros de backend e frontend. Ele é responsável, com base no backlog, realizar refinamentos técnico de componentes existentes ou criar novos componentes para solução. O seu refinamento técnico é realizado com apoio de engenheiros especialistas em frontend e backend. Também é reponsável por criar e manter desenhos de solução além de gerar o Software Design Document;
-* **packages/agents/backend/**, Engenheiro senior especialista em desenvolvimento backend. Tem conhecimento profundo em Kotlin, Spring boot, Banco de dados relacionais e NoSQL e infraestrutura tanto AWS quanto Kubernetes;
-* **packages/agents/frontend/**, Engenheiro senior especialista em desenvolvimento frontend. Tem conhecimento profundo em TypeScript, ReactJS/NextJS e infraestrutura tanto AWS quanto Kubernetes.
+* **packages/agents/tech_lead/**, Engenheiro senior, que atua como tech lead de engenheiros de backend e frontend. Ele é responsável, com base no backlog, realizar refinamentos técnico de componentes existentes ou criar novos componentes para solução. O seu refinamento técnico é realizado com apoio de engenheiros especialistas em frontend e backend. Também é reponsável por criar e manter desenhos de solução além de gerar o Software Design Document. O conhecimento técnico deste agente refere-se aos produtos analisados durante
+o discovery, não à stack do sandbox (que é Python);
+* **packages/agents/backend/**, Engenheiro senior especialista em desenvolvimento backend. Tem conhecimento profundo em Kotlin, Spring boot, Banco de dados relacionais e NoSQL e infraestrutura tanto AWS quanto Kubernetes. O conhecimento técnico deste agente refere-se aos produtos analisados durante
+o discovery, não à stack do sandbox (que é Python).;
+* **packages/agents/frontend/**, Engenheiro senior especialista em desenvolvimento frontend. Tem conhecimento profundo em TypeScript, ReactJS/NextJS e infraestrutura tanto AWS quanto Kubernetes. O conhecimento técnico deste agente refere-se aos produtos analisados durante
+o discovery, não à stack do sandbox (que é Python)..
 
 ## O que nunca fazer
 * Criar arquivos fora da estrutura estabelecida do projeto;
