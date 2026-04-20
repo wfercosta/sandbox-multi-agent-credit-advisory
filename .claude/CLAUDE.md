@@ -120,12 +120,21 @@ Os tipos (types) suportados são:
 
 **Convenções para geração documentos**
 
-* Specs: toda feature começa com a crição de uma especificação no diretŕoio ```specs``, com o seguinte padrão: specs/NNNN-slug/spec.md
+* Specs: toda feature começa com a crição de uma especificação no diretŕoio ```specs``, com o seguinte padrão: specs/NNNN-slug/spec.md;
 * Diagram: todoa evolução do projeto deve ser a criação ou atualização da visão de arquitetura e design usando um modelo mermaid first e deve ser armazenado no diretório: docs/diagrams/;
 * ADRs: toda decisção importante do projeto deve ser gerado uma ADR no diretório docs/adr/ no formato MADR;
-* Playbooks: Toda definição de procedimentos, melhores práticas e estratégias padronizadas para execução de tarefas técnias devem ser colocados em: docs/playbooks, usando um formato markdown
-* Runbooks: Toda definição de procedimentos operacionais devem ser colocados em: docs/runbooks, usando um formato markdown
-* Templates: Toda definição templates padronizados devem ser colocados em: docs/templates, usando um formato markdown
+* Playbooks: Toda definição de procedimentos, melhores práticas e estratégias padronizadas para execução de tarefas técnias devem ser colocados em: docs/playbooks, usando um formato markdown;
+* Runbooks: Toda definição de procedimentos operacionais devem ser colocados em: docs/runbooks, usando um formato markdown;
+* Templates: Toda definição templates padronizados devem ser colocados em: docs/templates, usando um formato markdown;
+
+## Templates de documentação
+
+Ao criar qualquer documentação nova, use os templates em `docs/templates/`:
+
+- `spec.md` — especificação de feature (SDD)
+- `adr.md` — Architecture Decision Record (MADR estendido)
+- `runbook.md` — procedimento operacional
+- `readme-package.md` — README de pacote do monorepo
 
 ## Agentes do sistema
 
