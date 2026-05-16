@@ -1,0 +1,179 @@
+############################################################
+# CUSTOM BASH PROMPT
+############################################################
+
+############################
+# Aliases
+############################
+alias gs='git status'
+alias ga='git add .'
+alias gc='git commit -m'
+alias gcf='git commit --fixup'
+alias gp='git push'
+alias gl='git log --oneline --decorate --all --graph'
+
+############################
+# Colors and styles
+############################
+RESET='\[\e[0m\]'
+BOLD='\[\e[1m\]'
+
+COL_USER_HOST='\[\e[33m\]'
+COL_PATH='\[\e[37m\]'
+COL_CURSOR='\[\e[33m\]'
+
+COL_OK='\[\e[92m\]'
+COL_WARN='\[\e[93m\]'
+COL_ERR='\[\e[91m\]'
+COL_INFO='\[\e[96m\]'
+COL_MUTED='\[\e[90m\]'
+COL_KUBE='\[\e[94m\]'
+COL_AWS='\[\e[95m\]'
+COL_VENV='\[\e[36m\]'
+
+COL_GIT_CLEAN='\[\e[92m\]'
+COL_GIT_DIRTY='\[\e[93m\]'
+
+############################
+# Config
+############################
+SHOW_GIT=true
+SHOW_AWS=true
+SHOW_KUBE=true
+SHOW_VENV=true
+SHOW_EXIT_CODE=true
+
+############################
+# Helpers
+############################
+
+command_exists() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+############################
+# Git
+############################
+
+parse_git_branch() {
+    git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null
+}
+
+parse_git_color() {
+    if [[ -n "$(git status --porcelain 2>/dev/null)" ]]; then
+        echo "${COL_GIT_DIRTY}"
+    else
+        echo "${COL_GIT_CLEAN}"
+    fi
+}
+
+build_git_segment() {
+    [[ "$SHOW_GIT" != true ]] && return
+    git rev-parse --is-inside-work-tree >/dev/null 2>&1 || return
+
+    local git_branch git_color
+    git_branch="$(parse_git_branch)"
+    git_color="$(parse_git_color)"
+
+    [[ -n "$git_branch" ]] && echo " ${git_color}git:(${git_branch})${RESET}"
+}
+
+############################
+# AWS
+############################
+
+build_aws_segment() {
+    [[ "$SHOW_AWS" != true ]] && return
+
+    local aws_profile aws_region
+    aws_profile="${AWS_PROFILE:-}"
+    aws_region="${AWS_REGION:-${AWS_DEFAULT_REGION:-}}"
+
+    [[ -z "$aws_profile" && -z "$aws_region" ]] && return
+
+    if [[ -n "$aws_profile" && -n "$aws_region" ]]; then
+        echo " ${COL_AWS}aws:[${aws_profile}|${aws_region}]${RESET}"
+    elif [[ -n "$aws_profile" ]]; then
+        echo " ${COL_AWS}aws:[${aws_profile}]${RESET}"
+    else
+        echo " ${COL_AWS}aws:[${aws_region}]${RESET}"
+    fi
+}
+
+############################
+# Kubernetes
+############################
+
+build_kube_segment() {
+    [[ "$SHOW_KUBE" != true ]] && return
+    command_exists kubectl || return
+
+    local ctx ns
+    ctx="$(kubectl config current-context 2>/dev/null)"
+    [[ -z "$ctx" ]] && return
+
+    ns="$(kubectl config view --minify --output 'jsonpath={..namespace}' 2>/dev/null)"
+    [[ -z "$ns" ]] && ns="default"
+
+    echo " ${COL_KUBE}k8s:[${ctx}/${ns}]${RESET}"
+}
+
+############################
+# Python virtualenv
+############################
+
+build_venv_segment() {
+    [[ "$SHOW_VENV" != true ]] && return
+
+    local venv_name=""
+    if [[ -n "${VIRTUAL_ENV:-}" ]]; then
+        venv_name="$(basename "$VIRTUAL_ENV")"
+    elif [[ -n "${CONDA_DEFAULT_ENV:-}" ]]; then
+        venv_name="${CONDA_DEFAULT_ENV}"
+    fi
+
+    [[ -n "$venv_name" ]] && echo " ${COL_VENV}py:[${venv_name}]${RESET}"
+}
+
+############################
+# Exit code
+############################
+
+build_exit_segment() {
+    local exit_code="$1"
+    [[ "$SHOW_EXIT_CODE" != true ]] && return
+
+    if [[ "$exit_code" -eq 0 ]]; then
+        echo "${COL_OK}✔${RESET}"
+    else
+        echo "${COL_ERR}✘(${exit_code})${RESET}"
+    fi
+}
+
+############################
+# Prompt builder
+############################
+
+set_bash_prompt() {
+    local last_exit="$?"
+    local exit_segment git_segment aws_segment kube_segment venv_segment
+
+    exit_segment="$(build_exit_segment "$last_exit")"
+    git_segment="$(build_git_segment)"
+    aws_segment="$(build_aws_segment)"
+    kube_segment="$(build_kube_segment)"
+    venv_segment="$(build_venv_segment)"
+
+    PS1=""
+    PS1+="${exit_segment} "
+    PS1+="${BOLD}${COL_USER_HOST}\u@\h${RESET} "
+    PS1+="${COL_PATH}\w${RESET}"
+    PS1+="${git_segment}"
+    PS1+="${aws_segment}"
+    PS1+="${kube_segment}"
+    PS1+="${venv_segment}"
+    PS1+="\n"
+    PS1+="${COL_CURSOR}└─>${RESET} "
+}
+
+PROMPT_COMMAND=set_bash_prompt
