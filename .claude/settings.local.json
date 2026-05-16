@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(podman-compose *)",
+      "Bash(podman ps *)",
+      "Bash(podman inspect *)",
+      "Bash(git *)"
+    ]
+  }
+}
